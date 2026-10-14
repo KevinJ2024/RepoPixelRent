@@ -1,5 +1,5 @@
 package org.PixelRent;
-
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class Empresa {
@@ -23,6 +23,52 @@ public class Empresa {
         this.listReservas = new LinkedList<>();
         this.listSedes = new LinkedList<>();
     }
+
+    public Sede encontrarSede(String codigoSede) {
+        for (Sede sede : listSedes) {
+            if (sede.getCodigo().equals(codigoSede)) {
+                return sede;
+            }
+        }
+        return null;
+    }
+
+    public Sede encontrarSedeDelKit(String codigoSede) {
+        for (Sede sede : listSedes) {
+            
+                if (sede.getCodigo().equals(codigoSede)) {
+                    return sede;
+                
+            }
+        }
+        return null;
+    }
+    public Sede encontrarSedeDeCamara(String codigoSede) {
+        for (Sede sede : listSedes) {
+            if (sede.getCodigo().equals(codigoSede)) {
+                return sede;
+            }
+        }
+        return null;
+    }
+    public boolean registrarReserva(String codigo, LocalDate fecha, Turno turno, EstadoReserva estado, LinkedList<Dispositivo> dispositivosReserva) {
+        for (Reserva reserva : this.listReservas) {
+            if (reserva.getCodigo().equals(codigo)) {
+                return false;
+            }
+        }
+
+        Reserva nuevaReserva = new Reserva(codigo, fecha, turno, estado, dispositivosReserva);
+        return this.listReservas.add(nuevaReserva);
+    }
+
+
+
+
+
+
+
+    
 
     public String getCodigo() {
         return this.codigo;

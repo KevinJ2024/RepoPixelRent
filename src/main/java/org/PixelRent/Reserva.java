@@ -13,12 +13,12 @@ public class Reserva {
     //Constructor
 
     public Reserva(String codigo, LocalDate fecha,
-                   Turno turno, EstadoReserva estadoReserva) {
+                   Turno turno, EstadoReserva estadoReserva,LinkedList<Dispositivo> listDispositivos) {
         this.codigo = codigo;
         this.fecha = fecha;
         this.turno = turno;
         this.estadoReserva = estadoReserva;
-        this.listDispositivos = null;
+        this.listDispositivos = listDispositivos;
     }
 
     //Gets y Sets
