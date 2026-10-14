@@ -6,17 +6,20 @@ public class Operador {
     private String identificacion;
     private String nombre;
     private String telefono;
-    private String correo;
+    private String certificacion;
+    private int aniosExp;
 
     private LinkedList<Reserva> listReservas;
 
     //Constructor
     public Operador(String identificacion, String nombre,
-                    String telefono, String correo) {
+                    String telefono, String certificacion,
+                    int aniosExp) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.telefono = telefono;
-        this.correo = correo;
+        this.certificacion = certificacion;
+        this.aniosExp = aniosExp;
         this.listReservas = null;
     }
 
@@ -46,12 +49,20 @@ public class Operador {
         this.telefono = telefono;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getCertificacion() {
+        return certificacion;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setCertificacion(String certificacion) {
+        this.certificacion = certificacion;
+    }
+
+    public int getAniosExp() {
+        return aniosExp;
+    }
+
+    public void setAniosExp(int aniosExp) {
+        this.aniosExp = aniosExp;
     }
 
     public LinkedList<Reserva> getListReservas() {

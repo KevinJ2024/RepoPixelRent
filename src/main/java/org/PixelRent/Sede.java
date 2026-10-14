@@ -14,22 +14,39 @@ public class Sede {
         this.codigo = codigo;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.listDispositivos = null;
+        this.listDispositivos = new LinkedList<Dispositivo>();
     }
 
-    public boolean ValidarCodigoDispositivo(){
+    public boolean ValidarCodigoDispositivo(String nuevoCodigo) {
+        boolean validado = false;
+
+        //Que no este vacia la lista
+        if (this.listDispositivos != null) {
+            //Ciclo para comprobar los otros dispositivos
+            for (Dispositivo dispositivo : listDispositivos) {
+                //Que el dispositivo actual no sea nulo
+                if (dispositivo != null) {
+                    /*Si el dispositivo actual a agregar no comparte codigo con
+                    ninguno de la lista se valida como verdadera la validacion*/
+                    if (!nuevoCodigo.equals(dispositivo.getCodigo())) {
+                        validado = true;
+                    }
+                }
+            }
+        }
+
+        return validado;
+    }
+
+    public boolean registrarCamara() {
         return false;
     }
 
-    public boolean registrarCamara(){
+    public boolean registrarDron() {
         return false;
     }
 
-    public boolean registrarDron(){
-        return false;
-    }
-
-    public boolean registrarKit(){
+    public boolean registrarKit() {
         return false;
     }
 
