@@ -73,6 +73,68 @@ public class Reserva {
         }
     }
 
+    public double calcularTotal() {
+        double total = 0.0;
+        //Comprobar que existe la listas
+        if (listDispositivos != null && listHorasUsados != null) {
+            //se recorre la lista de dispositivos con un for normal para tener los index
+            for (int i = 0; i < listDispositivos.size(); i++) {
+                //Se obtiene el dispositivo actual del ciclo
+                Dispositivo dispositivo = listDispositivos.get(i);
+
+                if (dispositivo != null) {
+                    //Se obtienen las horas del dispositivo ubicado en la misma posicion en la otra lista de horas
+                    int horas = listHorasUsados.get(i);
+
+                    //Se calcula el precio base con las horas
+                    double precioHoras = dispositivo.getPrecioBase() * horas;
+
+                    //Se adiciona el adicional en caso de poseer
+                    total += precioHoras + obtenerValorAdicional(dispositivo);
+                }
+            }
+        }
+        return total;
+    }
+
+    private double obtenerValorAdicional(Dispositivo dispositivo){
+        double adicional = 0.0;
+        if (dispositivo instanceof Dron){
+            if (((Dron) dispositivo).isBateria()){
+                adicional += 20000;
+            }
+        }else if (dispositivo instanceof Camara){
+            if (((Camara) dispositivo).isEstabilizador()){
+                adicional += 15000;
+            }
+        }else if (dispositivo instanceof Kit){
+            if (((Kit) dispositivo).isControl()){
+                adicional += 12000;
+            }
+        }
+
+        return adicional;
+    }
+
+    private boolean agregarDispositivo(Dispositivo dispositivoNuevo){
+        boolean sePuedeAgregar = true;
+        boolean agregado = false;
+
+        if (listDispositivos != null){
+            for (Dispositivo dispositivo: listDispositivos){
+                if (dispositivo.getCodigo().equals(dispositivoNuevo.getCodigo())){
+                    sePuedeAgregar = false;
+                }
+            }
+
+            if (sePuedeAgregar){
+                listDispositivos.add(dispositivoNuevo);
+                agregado = true;
+            }
+        }
+        return agregado;
+    }
+
     //Gets y Sets
     public String getCodigo() {
         return codigo;

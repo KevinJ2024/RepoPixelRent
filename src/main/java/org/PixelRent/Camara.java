@@ -3,13 +3,13 @@ package org.PixelRent;
 public class Camara extends Dispositivo {
     private String resolucionMax;
     private boolean estabilizador;
+    private static final double PRECIO_BASE_CAMARA = 12000;
 
     //Constructor
     public Camara(String codigo, String marca,
                   String modelo, int horas,
-                  double precioBase, Sede theSede,
-                  String resolucionMax, boolean estabilizador) {
-        super(codigo, marca, modelo, horas, precioBase, theSede);
+                  Sede theSede, String resolucionMax, boolean estabilizador) {
+        super(codigo, marca, modelo, horas, PRECIO_BASE_CAMARA, theSede);
         this.resolucionMax = resolucionMax;
         this.estabilizador = estabilizador;
     }
