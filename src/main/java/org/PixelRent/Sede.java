@@ -14,51 +14,61 @@ public class Sede {
         this.codigo = codigo;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.listDispositivos = null;
+        this.listDispositivos = new LinkedList<Dispositivo>();
     }
 
-    
+    public boolean ValidarCodigoDispositivo(String nuevoCodigo) {
+        boolean validado = false;
 
-    public boolean ValidarCodigoDispositivo(){
-        return false;
+        //Que no este vacia la lista
+        if (this.listDispositivos != null) {
+            //Ciclo para comprobar los otros dispositivos
+            for (Dispositivo dispositivo : listDispositivos) {
+                //Que el dispositivo actual no sea nulo
+                if (dispositivo != null) {
+                    /*Si el dispositivo actual a agregar no comparte codigo con
+                    ninguno de la lista se valida como verdadera la validacion*/
+                    if (!nuevoCodigo.equals(dispositivo.getCodigo())) {
+                        validado = true;
+                    }
+                }
+            }
+        }
+        return validado;
     }
 
-    public boolean registrarCamara(){
-        return false;
-    }
-
-    public boolean registrarDron(String codigo, String marca, String modelo, int horas, double precioBase, Sede theSede, int autonomia, boolean bateria) {
+    public boolean registrarDron(String codigo, String marca, String modelo, Sede theSede, int autonomia, boolean bateria) {
         for (Dispositivo dispositivo : this.listDispositivos) {
             if (dispositivo.getCodigo().equals(codigo)) {
                 return false;
             }
         }
-        
-        Dron nuevoDron = new Dron(codigo, marca, modelo, horas, precioBase, theSede, autonomia, bateria);
+
+        Dron nuevoDron = new Dron(codigo, marca, modelo, theSede, autonomia, bateria);
         return this.listDispositivos.add(nuevoDron);
     }
 
-    public boolean registrarKit(String codigo, String marca, String modelo, int horas, double precioBase, Sede theSede, int luces, boolean control) {
+    public boolean registrarKit(String codigo, String marca, String modelo, Sede theSede, int luces, boolean control) {
         for (Dispositivo dispositivo : this.listDispositivos) {
             if (dispositivo.getCodigo().equals(codigo)) {
                 return false;
             }
         }
-        
-        Kit nuevoKit = new Kit(codigo, marca, modelo, horas, precioBase, theSede, luces, control);
+
+        Kit nuevoKit = new Kit(codigo, marca, modelo, theSede, luces, control);
         return this.listDispositivos.add(nuevoKit);
     }
-    public boolean registrarCamara(String codigo, String marca, String modelo, int horas, double precioBase, Sede theSede, String resolucionMax, boolean estabilizador) {
+
+    public boolean registrarCamara(String codigo, String marca, String modelo, Sede theSede, String resolucionMax, boolean estabilizador) {
         for (Dispositivo dispositivo : this.listDispositivos) {
             if (dispositivo.getCodigo().equals(codigo)) {
                 return false;
             }
         }
-        
-        Camara nuevaCamara = new Camara(codigo, marca, modelo, horas, precioBase, theSede, resolucionMax, estabilizador);
+
+        Camara nuevaCamara = new Camara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
         return this.listDispositivos.add(nuevaCamara);
     }
-
 
     public Dispositivo buscarDispositivo(String codigoDispositivo) {
         for (Dispositivo dispositivo : this.listDispositivos) {
@@ -69,9 +79,12 @@ public class Sede {
         return null;
     }
 
+<<<<<<< HEAD
     
         
     
+=======
+>>>>>>> main
     //Gets y Sets
     public String getCodigo() {
         return codigo;

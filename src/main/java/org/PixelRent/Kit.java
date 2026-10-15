@@ -3,13 +3,12 @@ package org.PixelRent;
 public class Kit extends Dispositivo{
     private int luces;
     private boolean control;
+    private static final double PRECIO_BASE_KIT = 10000;
 
     //Constructor
     public Kit(String codigo, String marca,
-               String modelo, int horas,
-               double precioBase, Sede theSede,
-               int luces, boolean control) {
-        super(codigo, marca, modelo, horas, precioBase, theSede);
+               String modelo, Sede theSede, int luces, boolean control) {
+        super(codigo, marca, modelo, 0, PRECIO_BASE_KIT, theSede);
         this.luces = luces;
         this.control = control;
     }

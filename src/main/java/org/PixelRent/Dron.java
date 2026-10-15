@@ -3,13 +3,12 @@ package org.PixelRent;
 public class Dron extends Dispositivo{
     private int autonomia;
     private boolean bateria;
+    private static final double PRECIO_BASE_DRON = 18000;
 
     //Constructor
     public Dron(String codigo, String marca,
-                String modelo, int horas,
-                double precioBase, Sede theSede,
-                int autonomia, boolean bateria) {
-        super(codigo, marca, modelo, horas, precioBase, theSede);
+                String modelo, Sede theSede, int autonomia, boolean bateria) {
+        super(codigo, marca, modelo, 0, PRECIO_BASE_DRON, theSede);
         this.autonomia = autonomia;
         this.bateria = bateria;
     }
