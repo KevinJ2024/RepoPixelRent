@@ -115,83 +115,89 @@ public class Main {
     }
 
     //Metodos de registro
-    public static void registrarDron() {
-        String codigo = JOptionPane.showInputDialog("Ingrese el código del Dron:");
-        String marca = JOptionPane.showInputDialog("Ingrese la marca:");
-        String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
-        String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la sede:");
-        Sede theSede = pixelRent.encontrarSede(codigoSede);
-       
-            
-        
-        int autonomia = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la autonomía de vuelo (en minutos):"));
-        String opcionBateria = JOptionPane.showInputDialog(null, "¿Cuenta con batería adicional?\nsi\nno");
-        boolean bateria;
-        if (opcionBateria.equals("si")) {
-            bateria = true;
-        } else {
-            bateria = false;
-        }
-
-        boolean verificacion = theSede.registrarDron(codigo, marca, modelo, theSede, autonomia, bateria);
-        if (verificacion) {
-            JOptionPane.showMessageDialog(null, "Registro exitoso");
-        } else {
-            JOptionPane.showMessageDialog(null, "No se hizo el registro");
-        }
+   public static void registrarDron() {
+    String codigo = JOptionPane.showInputDialog("Ingrese el código del Dron:");
+    if (pixelRent.consultarDispositivoCodigo(codigo) != null) {
+        JOptionPane.showMessageDialog(null, "Error: Ya existe un dispositivo con ese código en la empresa.");
+        return;
     }
 
-    public static void registrarCamara() {
-        String codigo = JOptionPane.showInputDialog("Ingrese el código de la Cámara:");
-        String marca = JOptionPane.showInputDialog("Ingrese la marca:");
-        String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
-        String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la Sede para la cámara:");
-        Sede theSede = pixelRent.encontrarSede(codigoSede);
-
-        String resolucionMax = JOptionPane.showInputDialog("Ingrese la resolución máxima (Ej: 4K, 1080p):");
-        String opcionEstabilizador = JOptionPane.showInputDialog(null, "¿Cuenta con estabilizador (si/no)?");
-
-        boolean estabilizador;
-        if (opcionEstabilizador.equalsIgnoreCase("si")) {
-            estabilizador = true;
-        } else {
-            estabilizador = false;
-        }
-
-        boolean verificacion = theSede.registrarCamara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
-
-        if (verificacion) {
-            JOptionPane.showMessageDialog(null, "Registro exitoso");
-        } else {
-            JOptionPane.showMessageDialog(null, "No se hizo el registro");
-        }
+    String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la Sede para el Dron:");
+    Sede theSede = pixelRent.encontrarSede(codigoSede);
+    if (theSede == null) {
+        JOptionPane.showMessageDialog(null, "Error: La sede ingresada no existe. Regístrela primero.");
+        return;
     }
 
-    public static void registrarKit() {
-        String codigo = JOptionPane.showInputDialog("Ingrese el código del Kit:");
-        String marca = JOptionPane.showInputDialog("Ingrese la marca:");
-        String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
-        String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la Sede para el Kit:");
-        Sede theSede = pixelRent.encontrarSede(codigoSede);
+    String marca = JOptionPane.showInputDialog("Ingrese la marca:");
+    String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
+    int autonomia = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la autonomía de vuelo (en minutos):"));
+    String opcionBateria = JOptionPane.showInputDialog(null, "¿Cuenta con batería adicional? (si/no)");
+    boolean bateria = opcionBateria.equalsIgnoreCase("si");
 
-        int luces = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de luces:"));
-        String opcionControl = JOptionPane.showInputDialog(null, "¿Cuenta con control inalámbrico (si/no)?");
-        boolean control;
-
-        if (opcionControl.equals("si")) {
-            control = true;
-        } else {
-            control = false;
-        }
-
-        boolean verificacion = theSede.registrarKit(codigo, marca, modelo, theSede, luces, control);
-
-        if (verificacion) {
-            JOptionPane.showMessageDialog(null, "Registro exitoso");
-        } else {
-            JOptionPane.showMessageDialog(null, "No se hizo el registro");
-        }
+    boolean verificacion = theSede.registrarDron(codigo, marca, modelo, theSede, autonomia, bateria);
+    if (verificacion) {
+        JOptionPane.showMessageDialog(null, "Registro exitoso");
+    } else {
+        JOptionPane.showMessageDialog(null, "No se hizo el registro");
     }
+}
+
+public static void registrarCamara() {
+    String codigo = JOptionPane.showInputDialog("Ingrese el código de la Cámara:");
+    if (pixelRent.consultarDispositivoCodigo(codigo) != null) {
+        JOptionPane.showMessageDialog(null, "Error: Ya existe un dispositivo con ese código en la empresa.");
+        return;
+    }
+
+    String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la Sede para la cámara:");
+    Sede theSede = pixelRent.encontrarSede(codigoSede);
+    if (theSede == null) {
+        JOptionPane.showMessageDialog(null, "Error: La sede ingresada no existe. Regístrela primero.");
+        return;
+    }
+
+    String marca = JOptionPane.showInputDialog("Ingrese la marca:");
+    String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
+    String resolucionMax = JOptionPane.showInputDialog("Ingrese la resolución máxima (Ej: 4K, 1080p):");
+    String opcionEstabilizador = JOptionPane.showInputDialog(null, "¿Cuenta con estabilizador? (si/no)");
+    boolean estabilizador = opcionEstabilizador.equalsIgnoreCase("si");
+
+    boolean verificacion = theSede.registrarCamara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
+    if (verificacion) {
+        JOptionPane.showMessageDialog(null, "Registro exitoso");
+    } else {
+        JOptionPane.showMessageDialog(null, "No se hizo el registro");
+    }
+}
+
+public static void registrarKit() {
+    String codigo = JOptionPane.showInputDialog("Ingrese el código del Kit:");
+    if (pixelRent.consultarDispositivoCodigo(codigo) != null) {
+        JOptionPane.showMessageDialog(null, "Error: Ya existe un dispositivo con ese código en la empresa.");
+        return;
+    }
+
+    String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la Sede para el Kit:");
+    Sede theSede = pixelRent.encontrarSede(codigoSede);
+    if (theSede == null) {
+        JOptionPane.showMessageDialog(null, "Error: La sede ingresada no existe. Regístrela primero.");
+        return;
+    }
+
+    String marca = JOptionPane.showInputDialog("Ingrese la marca:");
+    String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
+    int luces = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de luces:"));
+    String opcionControl = JOptionPane.showInputDialog(null, "¿Cuenta con control inalámbrico? (si/no)");
+    boolean control = opcionControl.equalsIgnoreCase("si");
+
+    boolean verificacion = theSede.registrarKit(codigo, marca, modelo, theSede, luces, control);
+    if (verificacion) {
+        JOptionPane.showMessageDialog(null, "Registro exitoso");
+    } else {
+        JOptionPane.showMessageDialog(null, "No se hizo el registro");
+    }
+}
 
     public static void registrarReserva() {
         String codigo = JOptionPane.showInputDialog("Ingrese el código de la reserva:");

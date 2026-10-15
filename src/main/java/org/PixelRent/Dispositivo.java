@@ -20,6 +20,7 @@ public abstract class Dispositivo {
         this.horas = horas;
         this.precioBase = precioBase;
         this.theSede = theSede;
+        this.estadoEquipo=EstadoEquipo.DISPONIBLE;
     }
 
     public void sumarHoras(int horasNuevas){
