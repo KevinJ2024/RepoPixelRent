@@ -216,6 +216,30 @@ public class Reserva {
         return listDispositivos;
     }
 
+    public LinkedList<Integer> getListHorasUsados() {
+        return listHorasUsados;
+    }
+
+    public void setListHorasUsados(LinkedList<Integer> listHorasUsados) {
+        this.listHorasUsados = listHorasUsados;
+    }
+
+    public Operador getTheOperador() {
+        return theOperador;
+    }
+
+    public void setTheOperador(Operador theOperador) {
+        this.theOperador = theOperador;
+    }
+
+    public Cliente getTheCliente() {
+        return theCliente;
+    }
+
+    public void setTheCliente(Cliente theCliente) {
+        this.theCliente = theCliente;
+    }
+
     public void setListDispositivos(LinkedList<Dispositivo> listDispositivos) {
         this.listDispositivos = listDispositivos;
     }

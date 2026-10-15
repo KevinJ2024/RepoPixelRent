@@ -70,7 +70,7 @@ public class Main {
         String codigo = JOptionPane.showInputDialog("Ingrese el código del Dron:");
         String marca = JOptionPane.showInputDialog("Ingrese la marca:");
         String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
-        String codigoSede = JOptionPane.showInputDialog("Ingrese el código del Dron:");
+        String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la sede para el Dron:");
         Sede theSede = pixelRent.encontrarSede(codigoSede);
         int autonomia = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la autonomía de vuelo (en minutos):"));
         String opcionBateria = JOptionPane.showInputDialog(null, "¿Cuenta con batería adicional?\nsi\nno");
@@ -121,7 +121,7 @@ public class Main {
         String codigo = JOptionPane.showInputDialog("Ingrese el código del Kit:");
         String marca = JOptionPane.showInputDialog("Ingrese la marca:");
         String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
-        String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la Sede:");
+        String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la Sede para el Kit:");
         Sede theSede = pixelRent.encontrarSede(codigoSede);
 
         int luces = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de luces:"));

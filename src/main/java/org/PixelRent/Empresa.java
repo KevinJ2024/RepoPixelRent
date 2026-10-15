@@ -26,7 +26,7 @@ public class Empresa {
         this.listSedes = new LinkedList<>();
     }
 
-    public boolean validarCodigoReserva(String codigoNuevo){
+    public boolean validarCodigoReserva(String codigoNuevo) {
         boolean validado = true;
 
         //Que no este vacia la lista
@@ -53,21 +53,74 @@ public class Empresa {
         return false;
     }
 
-    public void consultarDispositivosDisp(LocalDate fecha, Turno turno){
+    public LinkedList<Dispositivo> consultarDispositivosDisp(LocalDate fecha, Turno turno) {
+        //Creacion de la lista nueva con los dispositivos disponibles
+        LinkedList<Dispositivo> dispositivosDisponibles = new LinkedList<>();
 
+        //Validaciones de datos faltantes
+        if (fecha == null || turno == null || this.listSedes == null || this.listSedes.isEmpty()) {
+            return dispositivosDisponibles;
+        }
+
+        /*Se crea otra lista en la que se almacenaran los codigos que ya
+         esten reservados para la fecha y turno consultado
+         */
+        LinkedList<String> codigosOcupados = new LinkedList<>();
+
+        if (this.listReservas != null) {
+            //Ciclo sobre la lista de reservas
+            for (Reserva reserva : this.listReservas) {
+                //Se filtran reservas que coincidan en fecha y turno a las ingresadas
+                if (reserva != null && fecha.equals(reserva.getFecha()) && turno == reserva.getTurno()) {
+                    if (reserva.getListDispositivos() != null) {
+                        //Se realiza ciclo sobre los dispositivos de la reserva
+                        for (Dispositivo dispositivo : reserva.getListDispositivos()) {
+                            if (dispositivo != null && dispositivo.getCodigo() != null) {
+                                codigosOcupados.add(dispositivo.getCodigo());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //Se recorre todas las sedes en busca de los dispositivos
+        for (Sede sede : this.listSedes) {
+            //Comprobacion de la existencia de la sede y su lista de dispositivos
+            if (sede != null && sede.getListDispositivos() != null) {
+                //Ciclo sobre la lista de dispositivos
+                for (Dispositivo dispSede : sede.getListDispositivos()) {
+                    if (dispSede != null && dispSede.getCodigo() != null) {
+
+                        //Si el dispositivo de la sede no esta en la lista de ocupados se asume como disponible
+                        if (!codigosOcupados.contains(dispSede.getCodigo())) {
+                            dispositivosDisponibles.add(dispSede);
+                        }
+                    }
+                }
+            }
+        }
+
+        return dispositivosDisponibles;
     }
 
-    public Reserva consultarReservaIdCliente(String idCliente){
-
+    public Reserva consultarReservaIdCliente(String idCliente) {
+        if (!idCliente.equals("") || listReservas != null) {
+            for (Reserva reserva : listReservas) {
+                if (reserva != null && reserva.getTheCliente().identificacion().equals(idCliente)) {
+                    return reserva;
+                }
+            }
+        }
 
         return null;
     }
 
-    public Cliente consultarClienteId(String id){
-        if (listClientes != null){
-            for (Cliente cliente: listClientes){
-                if (cliente != null){
-                    if (cliente.identificacion().equals(id)){
+    public Cliente consultarClienteId(String id) {
+        if (listClientes != null) {
+            for (Cliente cliente : listClientes) {
+                if (cliente != null) {
+                    if (cliente.identificacion().equals(id)) {
                         return cliente;
                     }
                 }
@@ -76,11 +129,11 @@ public class Empresa {
         return null;
     }
 
-    public Operador consultarOperadorId(String id){
-        if (listOperadores != null){
-            for (Operador operador: listOperadores){
-                if (operador != null){
-                    if (operador.getIdentificacion().equals(id)){
+    public Operador consultarOperadorId(String id) {
+        if (listOperadores != null) {
+            for (Operador operador : listOperadores) {
+                if (operador != null) {
+                    if (operador.getIdentificacion().equals(id)) {
                         return operador;
                     }
                 }
