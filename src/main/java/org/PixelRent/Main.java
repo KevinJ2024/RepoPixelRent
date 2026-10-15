@@ -190,6 +190,23 @@ public class Main {
         JOptionPane.showMessageDialog(null, "No se pudo registrar la sede.");
     }
 }
+public static void registrarOperador() {
+    String identificacion = JOptionPane.showInputDialog("Ingrese la identificación del operador:");
+    String nombre = JOptionPane.showInputDialog("Ingrese el nombre del operador:");
+    String telefono = JOptionPane.showInputDialog("Ingrese el teléfono del operador:");
+    String certificacion = JOptionPane.showInputDialog("Ingrese la certificación del operador:");
+    int aniosExp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese los años de experiencia:"));
+
+    Operador nuevoOperador = new Operador(identificacion, nombre, telefono, certificacion, aniosExp);
+
+    boolean verificacion = pixelRent.registrarOperador(nuevoOperador);
+
+    if (verificacion) {
+        JOptionPane.showMessageDialog(null, "¡Operador registrado con éxito!");
+    } else {
+        JOptionPane.showMessageDialog(null, "No se pudo registrar el operador.");
+    }
+}
     }
 
 
