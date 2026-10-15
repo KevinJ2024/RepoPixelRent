@@ -121,9 +121,7 @@ public class Main {
         String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
         String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la sede:");
         Sede theSede = pixelRent.encontrarSede(codigoSede);
-       
-            
-        
+
         int autonomia = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la autonomía de vuelo (en minutos):"));
         String opcionBateria = JOptionPane.showInputDialog(null, "¿Cuenta con batería adicional?\nsi\nno");
         boolean bateria;
@@ -133,7 +131,12 @@ public class Main {
             bateria = false;
         }
 
-        boolean verificacion = theSede.registrarDron(codigo, marca, modelo, theSede, autonomia, bateria);
+        boolean verificacion = false;
+
+        if (theSede != null){
+            verificacion = theSede.registrarDron(codigo, marca, modelo, theSede, autonomia, bateria);
+        }
+
         if (verificacion) {
             JOptionPane.showMessageDialog(null, "Registro exitoso");
         } else {
@@ -158,7 +161,10 @@ public class Main {
             estabilizador = false;
         }
 
-        boolean verificacion = theSede.registrarCamara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
+        boolean verificacion = false;
+        if (theSede != null){
+            verificacion = theSede.registrarCamara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
+        }
 
         if (verificacion) {
             JOptionPane.showMessageDialog(null, "Registro exitoso");
@@ -184,7 +190,10 @@ public class Main {
             control = false;
         }
 
-        boolean verificacion = theSede.registrarKit(codigo, marca, modelo, theSede, luces, control);
+        boolean verificacion = false;
+        if (theSede != null){
+            verificacion = theSede.registrarKit(codigo, marca, modelo, theSede, luces, control);
+        }
 
         if (verificacion) {
             JOptionPane.showMessageDialog(null, "Registro exitoso");
