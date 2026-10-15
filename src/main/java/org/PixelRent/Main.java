@@ -10,12 +10,7 @@ public class Main {
     public static void main(String[] args) {
         boolean bandera = true;
         do {
-            int dato = Integer.parseInt(JOptionPane.showInputDialog(null,
-                    "MENU DE PixelRent" +
-                            "\n1.Registrar dispositivo" +
-                            "\n2. " +
-                            "\n3. " +
-                            "\n0. salir del sistema"));
+            int dato = Integer.parseInt(JOptionPane.showInputDialog(null, "MENU DE PixelRent" + "\n1.Registrar dispositivo" + "\n2. " + "\n3. " + "\n0. salir del sistema"));
 
             switch (dato) {
                 case 1:
@@ -39,12 +34,7 @@ public class Main {
         boolean bandera = true;
 
         do {
-            int dato = Integer.parseInt(JOptionPane.showInputDialog(null,
-                    "Escoja el dispositivo a registrar\n" +
-                            "1. Registrar dron\n" +
-                            "2. Registrar camara\n" +
-                            "3. Registrar kit\n" +
-                            "0. Salir"));
+            int dato = Integer.parseInt(JOptionPane.showInputDialog(null, "Escoja el dispositivo a registrar\n" + "1. Registrar dron\n" + "2. Registrar camara\n" + "3. Registrar kit\n" + "0. Salir"));
 
             switch (dato) {
                 case 1:
@@ -65,6 +55,32 @@ public class Main {
         } while (bandera);
     }
 
+    public static void menuConsultar() {
+        boolean bandera = true;
+
+        do {
+            int dato = Integer.parseInt(JOptionPane.showInputDialog(null, "Menu de consulta\n" +
+                    "1. Consultar Reservas confirmadas por cliente\n" +
+                    "2. Consultar Dispositivos Disponibles\n" +
+                    "0. Salir"));
+
+            switch (dato) {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 0:
+                    bandera = false;
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "opcion no valida");
+            }
+        } while (bandera);
+    }
+
+    //Metodos de registro
     public static void registrarDron() {
         String codigo = JOptionPane.showInputDialog("Ingrese el código del Dron:");
         String marca = JOptionPane.showInputDialog("Ingrese la marca:");
@@ -141,7 +157,6 @@ public class Main {
         }
     }
 
-
     public static void registrarReserva() {
         String codigo = JOptionPane.showInputDialog("Ingrese el código de la reserva:");
 
@@ -169,5 +184,56 @@ public class Main {
         }
     }
 
+    //Metodos de consulta
+    public void consultarReservaId() {
+        String dato = JOptionPane.showInputDialog("Ingrese el id del cliente para consultar las reservas confirmadas");
+        LinkedList<Reserva> listaConsultada = pixelRent.consultarReservaIdCliente(dato);
+        String mensaje = "Codigos de reservas confirmadas: \n";
+        if (listaConsultada != null) {
+            for (Reserva reserva : listaConsultada) {
+                mensaje += reserva.getCodigo();
+            }
+        }
 
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+
+    public void consultarReservaCodigo() {
+        String dato = JOptionPane.showInputDialog("Ingrese el codigo de la reserva");
+        Reserva reservaConsultada = pixelRent.consultarReservaCodigo(dato);
+
+        if (reservaConsultada != null) {
+            double costoTotal = reservaConsultada.calcularTotal();
+            JOptionPane.showMessageDialog(null, "Reserva Encontrada" + "\n Codigo: " + reservaConsultada.getCodigo() + "\n Fecha: " + reservaConsultada.getFecha() + "\n Turno: " + reservaConsultada.getTurno() + "\n Estado: " + reservaConsultada.getEstadoReserva() + "\n CostoTotal: " + costoTotal);
+        }
+    }
+
+    public void consultarDispositivosDisp() {
+        String fechaStr = JOptionPane.showInputDialog("Ingrese la fecha (Ej: 2026-10-14):");
+        LocalDate fecha = LocalDate.parse(fechaStr);
+
+        String turnoStr = JOptionPane.showInputDialog("Ingrese el turno (MAÑANA, TARDE, NOCHE):");
+        Turno turno = Turno.valueOf(turnoStr.toUpperCase());
+
+        LinkedList<Dispositivo> listaConsultada = pixelRent.consultarDispositivosDisp(fecha, turno);
+        String mensajeFinal = "Los dispositivos encontrados Fueron: \n";
+
+        if (listaConsultada != null) {
+            String camaras = "Camaras: \n";
+            String drones = "Drones: \n";
+            String kits = "Kits: \n";
+            for (Dispositivo dispositivo : listaConsultada) {
+                if (dispositivo instanceof Camara) {
+                    camaras += dispositivo.getCodigo() + "\n";
+                } else if (dispositivo instanceof Dron) {
+                    drones += dispositivo.getCodigo();
+                } else {
+                    kits += dispositivo.getCodigo();
+                }
+            }
+            mensajeFinal += camaras + drones + kits;
+
+            JOptionPane.showMessageDialog(null, mensajeFinal);
+        }
+    }
 }

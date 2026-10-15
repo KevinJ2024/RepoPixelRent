@@ -138,7 +138,7 @@ public class Reserva {
     public boolean actualizarEstado(EstadoReserva estadoNuevo, LinkedList<Reserva> reservasExistentes) {
         boolean actualizado = false;
 
-        if (estadoNuevo == EstadoReserva.CONFIRMADA) {
+        if (estadoNuevo == EstadoReserva.CONFIRMADA && (estadoReserva != EstadoReserva.CANCELADA && estadoReserva != EstadoReserva.FINALIZADA)) {
             // Se valida el operador Y que no existan colisiones de fecha, turno y dispositivo
             if (validarOperador() && validarFechaDispositivos(reservasExistentes)) {
                 this.setEstadoReserva(estadoNuevo);

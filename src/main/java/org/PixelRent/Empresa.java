@@ -104,10 +104,31 @@ public class Empresa {
         return dispositivosDisponibles;
     }
 
-    public Reserva consultarReservaIdCliente(String idCliente) {
-        if (!idCliente.equals("") || listReservas != null) {
+    public LinkedList<Reserva> consultarReservaIdCliente(String idCliente) {
+        //Crear la lista de reservas confirmadas asociadas al cliente
+        LinkedList<Reserva> reservasConfirmadas = new LinkedList<>();
+
+        //Validar idCliente que no este vacio y que exista la lista
+        if (idCliente != null && !idCliente.trim().isEmpty() && this.listReservas != null) {
+            for (Reserva reserva : this.listReservas) {
+
+                if (reserva != null && reserva.getTheCliente() != null) {
+                    //Verificar que coincida el ID del cliente Y que la reserva este confirmada
+                    if (idCliente.equals(reserva.getTheCliente().identificacion())
+                            && reserva.getEstadoReserva() == EstadoReserva.CONFIRMADA) {
+
+                        reservasConfirmadas.add(reserva);
+                    }
+                }
+            }
+        }
+        return reservasConfirmadas;
+    }
+
+    public Reserva consultarReservaCodigo(String codigo) {
+        if (!codigo.equals("") || listReservas != null) {
             for (Reserva reserva : listReservas) {
-                if (reserva != null && reserva.getTheCliente().identificacion().equals(idCliente)) {
+                if (reserva != null && reserva.getCodigo().equals(codigo)) {
                     return reserva;
                 }
             }
@@ -160,6 +181,8 @@ public class Empresa {
         }
 
         Reserva nuevaReserva = new Reserva(codigo, fecha, turno, estado, cliente, operador);
+
+        cliente.listReservas().add(nuevaReserva);
         return this.listReservas.add(nuevaReserva);
     }
 
