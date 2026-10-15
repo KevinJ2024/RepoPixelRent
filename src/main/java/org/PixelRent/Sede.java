@@ -37,36 +37,36 @@ public class Sede {
         return validado;
     }
 
-    public boolean registrarDron(String codigo, String marca, String modelo, int horas, double precioBase, Sede theSede, int autonomia, boolean bateria) {
+    public boolean registrarDron(String codigo, String marca, String modelo, Sede theSede, int autonomia, boolean bateria) {
         for (Dispositivo dispositivo : this.listDispositivos) {
             if (dispositivo.getCodigo().equals(codigo)) {
                 return false;
             }
         }
 
-        Dron nuevoDron = new Dron(codigo, marca, modelo, horas, this, autonomia, bateria);
+        Dron nuevoDron = new Dron(codigo, marca, modelo, theSede, autonomia, bateria);
         return this.listDispositivos.add(nuevoDron);
     }
 
-    public boolean registrarKit(String codigo, String marca, String modelo, int horas, double precioBase, Sede theSede, int luces, boolean control) {
+    public boolean registrarKit(String codigo, String marca, String modelo, Sede theSede, int luces, boolean control) {
         for (Dispositivo dispositivo : this.listDispositivos) {
             if (dispositivo.getCodigo().equals(codigo)) {
                 return false;
             }
         }
 
-        Kit nuevoKit = new Kit(codigo, marca, modelo, horas, this, luces, control);
+        Kit nuevoKit = new Kit(codigo, marca, modelo, theSede, luces, control);
         return this.listDispositivos.add(nuevoKit);
     }
 
-    public boolean registrarCamara(String codigo, String marca, String modelo, int horas, double precioBase, Sede theSede, String resolucionMax, boolean estabilizador) {
+    public boolean registrarCamara(String codigo, String marca, String modelo, Sede theSede, String resolucionMax, boolean estabilizador) {
         for (Dispositivo dispositivo : this.listDispositivos) {
             if (dispositivo.getCodigo().equals(codigo)) {
                 return false;
             }
         }
 
-        Camara nuevaCamara = new Camara(codigo, marca, modelo, horas, this, resolucionMax, estabilizador);
+        Camara nuevaCamara = new Camara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
         return this.listDispositivos.add(nuevaCamara);
     }
 

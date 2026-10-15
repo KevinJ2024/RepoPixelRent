@@ -41,7 +41,7 @@ public class Main {
 
         do {
             int dato = Integer.parseInt(JOptionPane.showInputDialog(null,
-                    "escoja el dispositivo a registrar\n" +
+                    "Escoja el dispositivo a registrar\n" +
                             "1. Registrar dron\n" +
                             "2. Registrar camara\n" +
                             "3. Registrar kit\n" +
@@ -70,8 +70,6 @@ public class Main {
         String codigo = JOptionPane.showInputDialog("Ingrese el código del Dron:");
         String marca = JOptionPane.showInputDialog("Ingrese la marca:");
         String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
-        int horas = Integer.parseInt(JOptionPane.showInputDialog("Ingrese las horas de uso:"));
-        double precioBase = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio base:"));
         String codigoSede = JOptionPane.showInputDialog("Ingrese el código del Dron:");
         Sede theSede = pixelRent.encontrarSede(codigoSede);
         int autonomia = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la autonomía de vuelo (en minutos):"));
@@ -83,7 +81,7 @@ public class Main {
             bateria = false;
         }
 
-        boolean verificacion = sedePrincipal.registrarDron(codigo, marca, modelo, horas, precioBase, theSede, autonomia, bateria);
+        boolean verificacion = sedePrincipal.registrarDron(codigo, marca, modelo, theSede, autonomia, bateria);
         if (verificacion) {
             JOptionPane.showMessageDialog(null, "Registro exitoso");
         } else {
@@ -96,12 +94,8 @@ public class Main {
         String codigo = JOptionPane.showInputDialog("Ingrese el código de la Cámara:");
         String marca = JOptionPane.showInputDialog("Ingrese la marca:");
         String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
-        int horas = Integer.parseInt(JOptionPane.showInputDialog("Ingrese las horas de uso:"));
-        double precioBase = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio base:"));
-
         String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la Sede para la cámara:");
         Sede theSede = pixelRent.encontrarSede(codigoSede);
-
 
         String resolucionMax = JOptionPane.showInputDialog("Ingrese la resolución máxima (Ej: 4K, 1080p):");
         String opcionEstabilizador = JOptionPane.showInputDialog(null, "¿Cuenta con estabilizador (si/no)?");
@@ -113,7 +107,7 @@ public class Main {
             estabilizador = false;
         }
 
-        boolean verificacion = sedePrincipal.registrarCamara(codigo, marca, modelo, horas, precioBase, theSede, resolucionMax, estabilizador);
+        boolean verificacion = sedePrincipal.registrarCamara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
 
         if (verificacion) {
             JOptionPane.showMessageDialog(null, "Registro exitoso");
@@ -127,8 +121,6 @@ public class Main {
         String codigo = JOptionPane.showInputDialog("Ingrese el código del Kit:");
         String marca = JOptionPane.showInputDialog("Ingrese la marca:");
         String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
-        int horas = Integer.parseInt(JOptionPane.showInputDialog("Ingrese las horas de uso:"));
-        double precioBase = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio base:"));
         String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la Sede:");
         Sede theSede = pixelRent.encontrarSede(codigoSede);
 
@@ -142,7 +134,7 @@ public class Main {
             control = false;
         }
 
-        boolean verificacion = sedePrincipal.registrarKit(codigo, marca, modelo, horas, precioBase, theSede, luces, control);
+        boolean verificacion = sedePrincipal.registrarKit(codigo, marca, modelo, theSede, luces, control);
 
         if (verificacion) {
             JOptionPane.showMessageDialog(null, "Registro exitoso");

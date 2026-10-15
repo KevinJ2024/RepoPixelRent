@@ -7,9 +7,8 @@ public class Kit extends Dispositivo{
 
     //Constructor
     public Kit(String codigo, String marca,
-               String modelo, int horas,
-               Sede theSede, int luces, boolean control) {
-        super(codigo, marca, modelo, horas, PRECIO_BASE_KIT, theSede);
+               String modelo, Sede theSede, int luces, boolean control) {
+        super(codigo, marca, modelo, 0, PRECIO_BASE_KIT, theSede);
         this.luces = luces;
         this.control = control;
     }

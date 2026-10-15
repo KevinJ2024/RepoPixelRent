@@ -7,9 +7,8 @@ public class Dron extends Dispositivo{
 
     //Constructor
     public Dron(String codigo, String marca,
-                String modelo, int horas,
-                Sede theSede, int autonomia, boolean bateria) {
-        super(codigo, marca, modelo, horas, PRECIO_BASE_DRON, theSede);
+                String modelo, Sede theSede, int autonomia, boolean bateria) {
+        super(codigo, marca, modelo, 0, PRECIO_BASE_DRON, theSede);
         this.autonomia = autonomia;
         this.bateria = bateria;
     }

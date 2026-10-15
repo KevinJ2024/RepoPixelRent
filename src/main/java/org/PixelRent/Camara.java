@@ -7,13 +7,11 @@ public class Camara extends Dispositivo {
 
     //Constructor
     public Camara(String codigo, String marca,
-                  String modelo, int horas,
-                  Sede theSede, String resolucionMax, boolean estabilizador) {
-        super(codigo, marca, modelo, horas, PRECIO_BASE_CAMARA, theSede);
+                  String modelo, Sede theSede, String resolucionMax, boolean estabilizador) {
+        super(codigo, marca, modelo, 0, PRECIO_BASE_CAMARA, theSede);
         this.resolucionMax = resolucionMax;
         this.estabilizador = estabilizador;
     }
-
 
     //Gets y Sets
     public String getResolucionMax() {
