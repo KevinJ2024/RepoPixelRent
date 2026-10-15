@@ -10,15 +10,33 @@ public class Main {
     public static void main(String[] args) {
         boolean bandera = true;
         do {
-            int dato = Integer.parseInt(JOptionPane.showInputDialog(null, "MENU DE PixelRent" + "\n1.Registrar dispositivo" + "\n2. " + "\n3. " + "\n0. salir del sistema"));
+            int dato = Integer.parseInt(JOptionPane.showInputDialog(null, "MENU DE PixelRent" +
+                    "\n1.Registrar dispositivo" +
+                    "\n2.Registrar cliente" +
+                    "\n3.Registrar operador" +
+                    "\n4.Registrar sede" +
+                    "\n5.Registrar reserva" +
+                    "\n6.Menu Consultas" +
+                    "\n0. salir del sistema"));
 
             switch (dato) {
                 case 1:
                     registrarDispositivo();
                     break;
                 case 2:
+
                     break;
                 case 3:
+                    registrarOperador();
+                    break;
+                case 4:
+                    registrarSede();
+                    break;
+                case 5:
+                    registrarReserva();
+                    break;
+                case 6:
+                    menuConsultar();
                     break;
                 case 0:
                     bandera = false;
@@ -34,7 +52,11 @@ public class Main {
         boolean bandera = true;
 
         do {
-            int dato = Integer.parseInt(JOptionPane.showInputDialog(null, "Escoja el dispositivo a registrar\n" + "1. Registrar dron\n" + "2. Registrar camara\n" + "3. Registrar kit\n" + "0. Salir"));
+            int dato = Integer.parseInt(JOptionPane.showInputDialog(null, "Escoja el dispositivo a registrar\n" +
+                    "1. Registrar dron\n" +
+                    "2. Registrar camara\n" +
+                    "3. Registrar kit\n" +
+                    "0. Salir"));
 
             switch (dato) {
                 case 1:
@@ -61,15 +83,19 @@ public class Main {
         do {
             int dato = Integer.parseInt(JOptionPane.showInputDialog(null, "Menu de consulta\n" +
                     "1. Consultar Reservas confirmadas por cliente\n" +
-                    "2. Consultar Dispositivos Disponibles\n" +
+                    "2. Consultar Reservas por codigo\n" +
+                    "3. Consultar Dispositivos Disponibles\n" +
                     "0. Salir"));
 
             switch (dato) {
                 case 1:
-
+                    consultarReservaId();
                     break;
                 case 2:
-
+                    consultarReservaCodigo();
+                    break;
+                case 3:
+                    consultarDispositivosDisp();
                     break;
                 case 0:
                     bandera = false;
@@ -85,7 +111,7 @@ public class Main {
         String codigo = JOptionPane.showInputDialog("Ingrese el código del Dron:");
         String marca = JOptionPane.showInputDialog("Ingrese la marca:");
         String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
-        String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la sede para el Dron:");
+        String codigoSede = JOptionPane.showInputDialog("Ingrese el código del Dron:");
         Sede theSede = pixelRent.encontrarSede(codigoSede);
         int autonomia = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la autonomía de vuelo (en minutos):"));
         String opcionBateria = JOptionPane.showInputDialog(null, "¿Cuenta con batería adicional?\nsi\nno");
@@ -129,7 +155,6 @@ public class Main {
             JOptionPane.showMessageDialog(null, "No se hizo el registro");
         }
     }
-
 
     public static void registrarKit() {
         String codigo = JOptionPane.showInputDialog("Ingrese el código del Kit:");
@@ -184,8 +209,44 @@ public class Main {
         }
     }
 
+    public static void registrarSede() {
+        String codigo = JOptionPane.showInputDialog("Ingrese el código de la sede:");
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre de la sede:");
+        String direccion = JOptionPane.showInputDialog("Ingrese la dirección de la sede:");
+
+        Sede nuevaSede = new Sede(codigo, nombre, direccion);
+
+        boolean verificacion = pixelRent.registrarSede(nuevaSede);
+
+        if (verificacion) {
+            JOptionPane.showMessageDialog(null, "¡Sede registrada con éxito!");
+
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la sede.");
+        }
+    }
+
+    public static void registrarOperador() {
+        String identificacion = JOptionPane.showInputDialog("Ingrese la identificación del operador:");
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre del operador:");
+        String telefono = JOptionPane.showInputDialog("Ingrese el teléfono del operador:");
+        String certificacion = JOptionPane.showInputDialog("Ingrese la certificación del operador:");
+        int aniosExp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese los años de experiencia:"));
+
+        Operador nuevoOperador = new Operador(identificacion, nombre, telefono, certificacion, aniosExp);
+
+        boolean verificacion = pixelRent.registrarOperador(nuevoOperador);
+
+        if (verificacion) {
+            JOptionPane.showMessageDialog(null, "¡Operador registrado con éxito!");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo registrar el operador.");
+        }
+    }
+
     //Metodos de consulta
-    public void consultarReservaId() {
+    public static void consultarReservaId() {
         String dato = JOptionPane.showInputDialog("Ingrese el id del cliente para consultar las reservas confirmadas");
         LinkedList<Reserva> listaConsultada = pixelRent.consultarReservaIdCliente(dato);
         String mensaje = "Codigos de reservas confirmadas: \n";
@@ -198,17 +259,22 @@ public class Main {
         JOptionPane.showMessageDialog(null, mensaje);
     }
 
-    public void consultarReservaCodigo() {
+    public static void consultarReservaCodigo() {
         String dato = JOptionPane.showInputDialog("Ingrese el codigo de la reserva");
         Reserva reservaConsultada = pixelRent.consultarReservaCodigo(dato);
 
         if (reservaConsultada != null) {
             double costoTotal = reservaConsultada.calcularTotal();
-            JOptionPane.showMessageDialog(null, "Reserva Encontrada" + "\n Codigo: " + reservaConsultada.getCodigo() + "\n Fecha: " + reservaConsultada.getFecha() + "\n Turno: " + reservaConsultada.getTurno() + "\n Estado: " + reservaConsultada.getEstadoReserva() + "\n CostoTotal: " + costoTotal);
+            JOptionPane.showMessageDialog(null, "Reserva Encontrada" +
+                    "\n Codigo: " + reservaConsultada.getCodigo() +
+                    "\n Fecha: " + reservaConsultada.getFecha() +
+                    "\n Turno: " + reservaConsultada.getTurno() +
+                    "\n Estado: " + reservaConsultada.getEstadoReserva() +
+                    "\n CostoTotal: " + costoTotal);
         }
     }
 
-    public void consultarDispositivosDisp() {
+    public static void consultarDispositivosDisp() {
         String fechaStr = JOptionPane.showInputDialog("Ingrese la fecha (Ej: 2026-10-14):");
         LocalDate fecha = LocalDate.parse(fechaStr);
 
@@ -237,3 +303,9 @@ public class Main {
         }
     }
 }
+
+
+
+
+
+
