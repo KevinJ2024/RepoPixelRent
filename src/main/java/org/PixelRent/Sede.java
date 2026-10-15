@@ -17,7 +17,7 @@ public class Sede {
         this.listDispositivos = new LinkedList<Dispositivo>();
     }
 
-    public boolean ValidarCodigoDispositivo(String nuevoCodigo) {
+    public boolean validarCodigoDispositivo(String nuevoCodigo) {
         boolean validado = false;
 
         //Que no este vacia la lista
@@ -38,46 +38,58 @@ public class Sede {
     }
 
     public boolean registrarDron(String codigo, String marca, String modelo, Sede theSede, int autonomia, boolean bateria) {
-        for (Dispositivo dispositivo : this.listDispositivos) {
-            if (dispositivo.getCodigo().equals(codigo)) {
-                return false;
+        if (validarCodigoDispositivo(codigo)){
+            for (Dispositivo dispositivo : this.listDispositivos) {
+                if (dispositivo.getCodigo().equals(codigo)) {
+                    return false;
+                }
             }
-        }
 
-        Dron nuevoDron = new Dron(codigo, marca, modelo, theSede, autonomia, bateria);
-        return this.listDispositivos.add(nuevoDron);
+            Dron nuevoDron = new Dron(codigo, marca, modelo, theSede, autonomia, bateria);
+            return this.listDispositivos.add(nuevoDron);
+        }else{
+            return false;
+        }
     }
 
     public boolean registrarKit(String codigo, String marca, String modelo, Sede theSede, int luces, boolean control) {
-        for (Dispositivo dispositivo : this.listDispositivos) {
-            if (dispositivo.getCodigo().equals(codigo)) {
-                return false;
+        if(validarCodigoDispositivo(codigo)){
+            for (Dispositivo dispositivo : this.listDispositivos) {
+                if (dispositivo.getCodigo().equals(codigo)) {
+                    return false;
+                }
             }
-        }
 
-        Kit nuevoKit = new Kit(codigo, marca, modelo, theSede, luces, control);
-        return this.listDispositivos.add(nuevoKit);
+            Kit nuevoKit = new Kit(codigo, marca, modelo, theSede, luces, control);
+            return this.listDispositivos.add(nuevoKit);
+        }else{
+            return false;
+        }
     }
 
     public boolean registrarCamara(String codigo, String marca, String modelo, Sede theSede, String resolucionMax, boolean estabilizador) {
-        for (Dispositivo dispositivo : this.listDispositivos) {
-            if (dispositivo.getCodigo().equals(codigo)) {
-                return false;
+        if (validarCodigoDispositivo(codigo)){
+            for (Dispositivo dispositivo : this.listDispositivos) {
+                if (dispositivo.getCodigo().equals(codigo)) {
+                    return false;
+                }
             }
-        }
 
-        Camara nuevaCamara = new Camara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
-        return this.listDispositivos.add(nuevaCamara);
+            Camara nuevaCamara = new Camara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
+            return this.listDispositivos.add(nuevaCamara);
+        }else{
+            return false;
+        }
     }
 
-    public Dispositivo buscarDispositivo(String codigoDispositivo) {
-        for (Dispositivo dispositivo : this.listDispositivos) {
-            if (dispositivo.getCodigo().equals(codigoDispositivo)) {
-                return dispositivo;
-            }
-        }
-        return null;
-    }
+//    public Dispositivo buscarDispositivo(String codigoDispositivo) {
+//        for (Dispositivo dispositivo : this.listDispositivos) {
+//            if (dispositivo.getCodigo().equals(codigoDispositivo)) {
+//                return dispositivo;
+//            }
+//        }
+//        return null;
+//    }
 
     //Gets y Sets
     public String getCodigo() {

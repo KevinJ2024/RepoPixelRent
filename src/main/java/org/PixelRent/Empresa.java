@@ -137,11 +137,11 @@ public class Empresa {
         return null;
     }
 
-    public Dispositivo consultarDispositivoCodigo(String codigoDispositivo){
-        if ( listSedes!= null) {
+    public Dispositivo consultarDispositivoCodigo(String codigoDispositivo) {
+        if (listSedes != null) {
             for (Sede sede : listSedes) {
                 if (sede != null) {
-                    for (Dispositivo dispositivo: sede.getListDispositivos()){
+                    for (Dispositivo dispositivo : sede.getListDispositivos()) {
                         if (dispositivo.getCodigo().equals(codigoDispositivo)) {
                             return dispositivo;
                         }
@@ -201,21 +201,21 @@ public class Empresa {
 
             cliente.listReservas().add(nuevaReserva);
             return this.listReservas.add(nuevaReserva);
-        }else{
+        } else {
             return false;
         }
     }
 
-    public boolean registrarSede(String codigo, String nombre, String direccion) {
-        for (Sede sede : this.listSedes) {
-            if (sede.getCodigo().equals(codigo)) {
-                return false;
-            }
-        }
-
-        Sede nuevaSede = new Sede(codigo, nombre, direccion);
-        return this.listSedes.add(nuevaSede);
-    }
+//    public boolean registrarSede(String codigo, String nombre, String direccion) {
+//        for (Sede sede : this.listSedes) {
+//            if (sede.getCodigo().equals(codigo)) {
+//                return false;
+//            }
+//        }
+//
+//        Sede nuevaSede = new Sede(codigo, nombre, direccion);
+//        return this.listSedes.add(nuevaSede);
+//    }
 
     public boolean registrarOperador(Operador nuevoOperador) {
         for (Operador operador : this.listOperadores) {
@@ -235,15 +235,15 @@ public class Empresa {
         return this.listSedes.add(nuevaSede);
     }
 
-public boolean registrarCliente(String identificacion, String nombre, String telefono, String correo) {
-    for (Cliente cliente : this.listClientes) {
-        if (cliente.identificacion().equals(identificacion)) {
-            return false;
+    public boolean registrarCliente(String identificacion, String nombre, String telefono, String correo) {
+        for (Cliente cliente : this.listClientes) {
+            if (cliente.identificacion().equals(identificacion)) {
+                return false;
+            }
         }
+        Cliente nuevoCliente = new Cliente(identificacion, nombre, telefono, correo, new LinkedList<>());
+        return this.listClientes.add(nuevoCliente);
     }
-    Cliente nuevoCliente = new Cliente(identificacion, nombre, telefono, correo, new LinkedList<>());
-    return this.listClientes.add(nuevoCliente);
-}
 
     //Gets y Sets
     public String getCodigo() {

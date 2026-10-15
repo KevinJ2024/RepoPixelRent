@@ -26,7 +26,7 @@ public class Main {
                     registrarDispositivo();
                     break;
                 case 2:
-
+                    registrarCliente();
                     break;
                 case 3:
                     registrarOperador();
