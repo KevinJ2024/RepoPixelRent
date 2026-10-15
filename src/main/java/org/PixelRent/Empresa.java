@@ -235,6 +235,16 @@ public class Empresa {
         return this.listSedes.add(nuevaSede);
     }
 
+public boolean registrarCliente(String identificacion, String nombre, String telefono, String correo) {
+    for (Cliente cliente : this.listClientes) {
+        if (cliente.identificacion().equals(identificacion)) {
+            return false;
+        }
+    }
+    Cliente nuevoCliente = new Cliente(identificacion, nombre, telefono, correo, new LinkedList<>());
+    return this.listClientes.add(nuevoCliente);
+}
+
     //Gets y Sets
     public String getCodigo() {
         return this.codigo;
