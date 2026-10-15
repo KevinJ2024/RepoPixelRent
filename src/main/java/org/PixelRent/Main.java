@@ -172,4 +172,28 @@ public class Main {
     }
 
 
+
+    public static void registrarSede() {
+    String codigo = JOptionPane.showInputDialog("Ingrese el código de la sede:");
+    String nombre = JOptionPane.showInputDialog("Ingrese el nombre de la sede:");
+    String direccion = JOptionPane.showInputDialog("Ingrese la dirección de la sede:");
+
+    Sede nuevaSede = new Sede(codigo, nombre, direccion);
+
+    boolean verificacion = pixelRent.registrarSede(nuevaSede);
+
+    if (verificacion) {
+        JOptionPane.showMessageDialog(null, "¡Sede registrada con éxito!");
+
+       
+    } else {
+        JOptionPane.showMessageDialog(null, "No se pudo registrar la sede.");
+    }
 }
+    }
+
+
+
+
+
+

@@ -110,6 +110,18 @@ public class Empresa {
         return this.listReservas.add(nuevaReserva);
     }
 
+
+    public boolean registrarSede(String codigo, String nombre, String direccion) {
+    for (Sede sede : this.listSedes) {
+        if (sede.getCodigo().equals(codigo)) {
+            return false;
+        }
+    }
+
+    Sede nuevaSede = new Sede(codigo, nombre, direccion);
+    return this.listSedes.add(nuevaSede);
+}
+
     //Gets y Sets
     public String getCodigo() {
         return this.codigo;
