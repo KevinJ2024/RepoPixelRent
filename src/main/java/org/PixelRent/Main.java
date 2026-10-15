@@ -281,10 +281,10 @@ public class Main {
     public static void consultarReservaId() {
         String dato = JOptionPane.showInputDialog("Ingrese el id del cliente para consultar las reservas confirmadas");
         LinkedList<Reserva> listaConsultada = pixelRent.consultarReservaIdCliente(dato);
-        String mensaje = "Codigos de reservas confirmadas: \n";
+        String mensaje = "CODIGOS de reservas confirmadas: \n";
         if (listaConsultada != null) {
             for (Reserva reserva : listaConsultada) {
-                mensaje += reserva.getCodigo();
+                mensaje += reserva.getCodigo() + ";";
             }
         }
 
@@ -296,13 +296,17 @@ public class Main {
         Reserva reservaConsultada = pixelRent.consultarReservaCodigo(dato);
 
         if (reservaConsultada != null) {
-            double costoTotal = reservaConsultada.calcularTotal();
+            double costoHoras = reservaConsultada.calcularTotal();
+            double valorAdicional = reservaConsultada.calcularValorAdicionalTotal();
+            double costoTotal = costoHoras + valorAdicional;
             JOptionPane.showMessageDialog(null, "Reserva Encontrada" +
                     "\n Codigo: " + reservaConsultada.getCodigo() +
                     "\n Fecha: " + reservaConsultada.getFecha() +
                     "\n Turno: " + reservaConsultada.getTurno() +
                     "\n Estado: " + reservaConsultada.getEstadoReserva() +
-                    "\n CostoTotal: " + costoTotal);
+                    "\n Costo por Horas: " + costoHoras +
+                    "\n Costo Adicional: " + valorAdicional +
+                    "\n Costo Total: " + costoTotal);
         }
     }
 
@@ -358,7 +362,8 @@ public class Main {
         String codigoDispositivo = JOptionPane.showInputDialog("Ingrese el codigo del dispositivo a agregar");
         Dispositivo dispositivo = pixelRent.consultarDispositivoCodigo(codigoDispositivo);
 
-        int horasUsadas = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tiempo de uso del dispositivo en horas"));
+        int horasUsadas = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tiempo de uso del dispositivo en horas" +
+                "\n -Precio por Hora de " + dispositivo.getPrecioBase()));
 
         boolean res = reserva.agregarDispositivo(dispositivo, horasUsadas);
 

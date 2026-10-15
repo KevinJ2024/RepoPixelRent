@@ -74,27 +74,17 @@ public class Reserva {
 //    }
 
     public double calcularTotal() {
-        double total = 0.0;
-        //Comprobar que existe la listas
+        double costoHoras = 0.0;
         if (listDispositivos != null && listHorasUsados != null) {
-            //se recorre la lista de dispositivos con un for normal para tener los index
             for (int i = 0; i < listDispositivos.size(); i++) {
-                //Se obtiene el dispositivo actual del ciclo
                 Dispositivo dispositivo = listDispositivos.get(i);
-
                 if (dispositivo != null) {
-                    //Se obtienen las horas del dispositivo ubicado en la misma posicion en la otra lista de horas
                     int horas = listHorasUsados.get(i);
-
-                    //Se calcula el precio base con las horas
-                    double precioHoras = dispositivo.getPrecioBase() * horas;
-
-                    //Se adiciona el adicional en caso de poseer
-                    total += precioHoras + obtenerValorAdicional(dispositivo);
+                    costoHoras += dispositivo.getPrecioBase() * horas;
                 }
             }
         }
-        return total;
+        return costoHoras;
     }
 
     private double obtenerValorAdicional(Dispositivo dispositivo) {
@@ -114,6 +104,18 @@ public class Reserva {
         }
 
         return adicional;
+    }
+
+    public double calcularValorAdicionalTotal() {
+        double adicionalTotal = 0.0;
+        if (listDispositivos != null) {
+            for (Dispositivo dispositivo : listDispositivos) {
+                if (dispositivo != null) {
+                    adicionalTotal += obtenerValorAdicional(dispositivo);
+                }
+            }
+        }
+        return adicionalTotal;
     }
 
     public boolean agregarDispositivo(Dispositivo dispositivoNuevo, int horasUsadas) {
