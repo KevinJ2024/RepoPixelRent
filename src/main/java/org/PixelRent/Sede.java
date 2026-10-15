@@ -18,78 +18,44 @@ public class Sede {
     }
 
     public boolean validarCodigoDispositivo(String nuevoCodigo) {
-        boolean validado = false;
-
-        //Que no este vacia la lista
-        if (this.listDispositivos != null) {
-            //Ciclo para comprobar los otros dispositivos
-            for (Dispositivo dispositivo : listDispositivos) {
-                //Que el dispositivo actual no sea nulo
-                if (dispositivo != null) {
-                    /*Si el dispositivo actual a agregar no comparte codigo con
-                    ninguno de la lista se valida como verdadera la validacion*/
-                    if (!nuevoCodigo.equals(dispositivo.getCodigo())) {
-                        validado = true;
-                    }
-                }
+    if (nuevoCodigo == null || nuevoCodigo.trim().isEmpty()) {
+        return false;
+    }
+    if (this.listDispositivos != null) {
+        for (Dispositivo dispositivo : this.listDispositivos) {
+            if (dispositivo != null && nuevoCodigo.equals(dispositivo.getCodigo())) {
+                return false; // Ya existe un dispositivo con ese código
             }
         }
-        return validado;
     }
+    return true; // Si la lista está vacía o no encontró repetidos, es válido
+}
 
-    public boolean registrarDron(String codigo, String marca, String modelo, Sede theSede, int autonomia, boolean bateria) {
-        if (validarCodigoDispositivo(codigo)){
-            for (Dispositivo dispositivo : this.listDispositivos) {
-                if (dispositivo.getCodigo().equals(codigo)) {
-                    return false;
-                }
-            }
-
-            Dron nuevoDron = new Dron(codigo, marca, modelo, theSede, autonomia, bateria);
-            return this.listDispositivos.add(nuevoDron);
-        }else{
-            return false;
-        }
+public boolean registrarDron(String codigo, String marca, String modelo, Sede theSede, int autonomia, boolean bateria) {
+    if (validarCodigoDispositivo(codigo)) {
+        Dron nuevoDron = new Dron(codigo, marca, modelo, theSede, autonomia, bateria);
+        return this.listDispositivos.add(nuevoDron);
     }
+    return false;
+}
 
-    public boolean registrarKit(String codigo, String marca, String modelo, Sede theSede, int luces, boolean control) {
-        if(validarCodigoDispositivo(codigo)){
-            for (Dispositivo dispositivo : this.listDispositivos) {
-                if (dispositivo.getCodigo().equals(codigo)) {
-                    return false;
-                }
-            }
-
-            Kit nuevoKit = new Kit(codigo, marca, modelo, theSede, luces, control);
-            return this.listDispositivos.add(nuevoKit);
-        }else{
-            return false;
-        }
+public boolean registrarKit(String codigo, String marca, String modelo, Sede theSede, int luces, boolean control) {
+    if (validarCodigoDispositivo(codigo)) {
+        Kit nuevoKit = new Kit(codigo, marca, modelo, theSede, luces, control);
+        return this.listDispositivos.add(nuevoKit);
     }
+    return false;
+}
 
-    public boolean registrarCamara(String codigo, String marca, String modelo, Sede theSede, String resolucionMax, boolean estabilizador) {
-        if (validarCodigoDispositivo(codigo)){
-            for (Dispositivo dispositivo : this.listDispositivos) {
-                if (dispositivo.getCodigo().equals(codigo)) {
-                    return false;
-                }
-            }
-
-            Camara nuevaCamara = new Camara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
-            return this.listDispositivos.add(nuevaCamara);
-        }else{
-            return false;
-        }
+public boolean registrarCamara(String codigo, String marca, String modelo, Sede theSede, String resolucionMax, boolean estabilizador) {
+    if (validarCodigoDispositivo(codigo)) {
+        Camara nuevaCamara = new Camara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
+        return this.listDispositivos.add(nuevaCamara);
     }
+    return false;
+}
 
-//    public Dispositivo buscarDispositivo(String codigoDispositivo) {
-//        for (Dispositivo dispositivo : this.listDispositivos) {
-//            if (dispositivo.getCodigo().equals(codigoDispositivo)) {
-//                return dispositivo;
-//            }
-//        }
-//        return null;
-//    }
+//    
 
     //Gets y Sets
     public String getCodigo() {

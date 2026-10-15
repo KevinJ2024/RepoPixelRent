@@ -119,8 +119,11 @@ public class Main {
         String codigo = JOptionPane.showInputDialog("Ingrese el código del Dron:");
         String marca = JOptionPane.showInputDialog("Ingrese la marca:");
         String modelo = JOptionPane.showInputDialog("Ingrese el modelo:");
-        String codigoSede = JOptionPane.showInputDialog("Ingrese el código del Dron:");
+        String codigoSede = JOptionPane.showInputDialog("Ingrese el código de la sede:");
         Sede theSede = pixelRent.encontrarSede(codigoSede);
+       
+            
+        
         int autonomia = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la autonomía de vuelo (en minutos):"));
         String opcionBateria = JOptionPane.showInputDialog(null, "¿Cuenta con batería adicional?\nsi\nno");
         boolean bateria;
