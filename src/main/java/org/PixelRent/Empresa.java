@@ -121,6 +121,23 @@ public class Empresa {
     Sede nuevaSede = new Sede(codigo, nombre, direccion);
     return this.listSedes.add(nuevaSede);
 }
+public boolean registrarOperador(Operador nuevoOperador) {
+    for (Operador operador : this.listOperadores) {
+        if (operador.getIdentificacion().equals(nuevoOperador.getIdentificacion())) {
+            return false;
+        }
+    }
+    return this.listOperadores.add(nuevoOperador);
+}
+
+public boolean registrarSede(Sede nuevaSede) {
+    for (Sede sede : this.listSedes) {
+        if (sede.getCodigo().equals(nuevaSede.getCodigo())) {
+            return false;
+        }
+    }
+    return this.listSedes.add(nuevaSede);
+}
 
     //Gets y Sets
     public String getCodigo() {
