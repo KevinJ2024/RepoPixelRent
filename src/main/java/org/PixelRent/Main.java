@@ -211,8 +211,7 @@ public class Main {
         String turnoStr = JOptionPane.showInputDialog("Ingrese el turno (MAÑANA, TARDE, NOCHE):");
         Turno turno = Turno.valueOf(turnoStr.toUpperCase());
 
-        String estadoStr = JOptionPane.showInputDialog("Ingrese el estado (PENDIENTE, ACTIVA, etc):");
-        EstadoReserva estado = EstadoReserva.valueOf(estadoStr.toUpperCase());
+        EstadoReserva estado = EstadoReserva.SOLICITADA;
 
         String idCliente = JOptionPane.showInputDialog("Ingrese el ID del cliente");
         Cliente cliente = pixelRent.consultarClienteId(idCliente);
@@ -249,7 +248,7 @@ public class Main {
         String identificacion = JOptionPane.showInputDialog("Ingrese la identificación del operador:");
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre del operador:");
         String telefono = JOptionPane.showInputDialog("Ingrese el teléfono del operador:");
-        String certificacion = JOptionPane.showInputDialog("Ingrese la certificación del operador:");
+        String certificacion = JOptionPane.showInputDialog("Ingrese la certificación del operador: (Dron, Camara, Kit)");
         int aniosExp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese los años de experiencia:"));
 
         Operador nuevoOperador = new Operador(identificacion, nombre, telefono, certificacion, aniosExp);
@@ -315,19 +314,19 @@ public class Main {
         Turno turno = Turno.valueOf(turnoStr.toUpperCase());
 
         LinkedList<Dispositivo> listaConsultada = pixelRent.consultarDispositivosDisp(fecha, turno);
-        String mensajeFinal = "Los dispositivos encontrados Fueron: \n";
+        String mensajeFinal = "Los CODIGOS de los dispositivos disponibles son: \n";
 
         if (listaConsultada != null) {
-            String camaras = "Camaras: \n";
-            String drones = "Drones: \n";
-            String kits = "Kits: \n";
+            String camaras = "\nCamaras: ";
+            String drones = "\nDrones: ";
+            String kits = "\nKits: ";
             for (Dispositivo dispositivo : listaConsultada) {
                 if (dispositivo instanceof Camara) {
-                    camaras += dispositivo.getCodigo() + "\n";
+                    camaras += dispositivo.getCodigo() + ";";
                 } else if (dispositivo instanceof Dron) {
-                    drones += dispositivo.getCodigo();
+                    drones += dispositivo.getCodigo() + ";";
                 } else {
-                    kits += dispositivo.getCodigo();
+                    kits += dispositivo.getCodigo() + ";";
                 }
             }
             mensajeFinal += camaras + drones + kits;
@@ -340,7 +339,7 @@ public class Main {
     public static void actualizarEstadoReserva() {
         String codigoReserva = JOptionPane.showInputDialog("Ingrese el codigo de la reserva a actualizar el estado");
         Reserva reserva = pixelRent.consultarReservaCodigo(codigoReserva);
-        String estadoStr = JOptionPane.showInputDialog("Ingrese el nuevo estado (PENDIENTE, ACTIVA, etc):");
+        String estadoStr = JOptionPane.showInputDialog("Ingrese el nuevo estado SOLICITADA, CONFIRMADA, CANCELADA, FINALIZADA:");
         EstadoReserva nuevoEstado = EstadoReserva.valueOf(estadoStr.toUpperCase());
 
         boolean res = pixelRent.cambiarEstadoReserva(nuevoEstado, reserva);
@@ -359,7 +358,9 @@ public class Main {
         String codigoDispositivo = JOptionPane.showInputDialog("Ingrese el codigo del dispositivo a agregar");
         Dispositivo dispositivo = pixelRent.consultarDispositivoCodigo(codigoDispositivo);
 
-        boolean res = reserva.agregarDispositivo(dispositivo);
+        int horasUsadas = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tiempo de uso del dispositivo en horas"));
+
+        boolean res = reserva.agregarDispositivo(dispositivo, horasUsadas);
 
         if (res) {
             JOptionPane.showMessageDialog(null, "¡Dispositivo agregado exitosamente!");

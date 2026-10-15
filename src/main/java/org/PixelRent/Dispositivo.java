@@ -17,6 +17,7 @@ public abstract class Dispositivo {
         this.codigo = codigo;
         this.marca = marca;
         this.modelo = modelo;
+        this.estadoEquipo = EstadoEquipo.DISPONIBLE;
         this.horas = horas;
         this.precioBase = precioBase;
         this.theSede = theSede;
@@ -41,6 +42,14 @@ public abstract class Dispositivo {
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public EstadoEquipo getEstadoEquipo() {
+        return estadoEquipo;
+    }
+
+    public void setEstadoEquipo(EstadoEquipo estadoEquipo) {
+        this.estadoEquipo = estadoEquipo;
     }
 
     public String getModelo() {

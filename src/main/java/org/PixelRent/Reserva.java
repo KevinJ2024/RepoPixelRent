@@ -52,26 +52,26 @@ public class Reserva {
         return validado;
     }
 
-    public void contadorTiempo(String codigoDispositivo, int horasUsadas) {
-        // Si ambas listas existen se sigue el proceso
-        if (listDispositivos != null && listHorasUsados != null) {
-
-            int index = 0; //index para tener en consideracion la posicion actual del elemento del ciclo
-
-            for (Dispositivo dispositivo : listDispositivos) {
-                //Se valida que exista el dispositivo actual a considerar
-                if (dispositivo != null) {
-                    //Se halla el dispositivo a considerar
-                    if (dispositivo.getCodigo().equals(codigoDispositivo)) {
-                        //Si se hallo el elemento se añade en la misma posicion en el que se encontro
-                        listHorasUsados.set(index, horasUsadas);
-                        break; //Se rompe el ciclo porque ya se asigno la hora al dispositivo
-                    }
-                }
-                index++;
-            }
-        }
-    }
+//    public void contadorTiempo(String codigoDispositivo, int horasUsadas) {
+//        // Si ambas listas existen se sigue el proceso
+//        if (listDispositivos != null && listHorasUsados != null) {
+//
+//            int index = 0; //index para tener en consideracion la posicion actual del elemento del ciclo
+//
+//            for (Dispositivo dispositivo : listDispositivos) {
+//                //Se valida que exista el dispositivo actual a considerar
+//                if (dispositivo != null) {
+//                    //Se halla el dispositivo a considerar
+//                    if (dispositivo.getCodigo().equals(codigoDispositivo)) {
+//                        //Si se hallo el elemento se añade en la misma posicion en el que se encontro
+//                        listHorasUsados.set(index, horasUsadas);
+//                        break; //Se rompe el ciclo porque ya se asigno la hora al dispositivo
+//                    }
+//                }
+//                index++;
+//            }
+//        }
+//    }
 
     public double calcularTotal() {
         double total = 0.0;
@@ -116,19 +116,21 @@ public class Reserva {
         return adicional;
     }
 
-    public boolean agregarDispositivo(Dispositivo dispositivoNuevo) {
+    public boolean agregarDispositivo(Dispositivo dispositivoNuevo, int horasUsadas) {
         boolean sePuedeAgregar = true;
         boolean agregado = false;
 
         if (listDispositivos != null) {
             for (Dispositivo dispositivo : listDispositivos) {
-                if (dispositivo.getCodigo().equals(dispositivoNuevo.getCodigo())) {
+                if (dispositivo.getCodigo().equals(dispositivoNuevo.getCodigo()) && dispositivo.estadoEquipo == EstadoEquipo.DISPONIBLE) {
                     sePuedeAgregar = false;
+                    break;
                 }
             }
 
             if (sePuedeAgregar) {
                 listDispositivos.add(dispositivoNuevo);
+                listHorasUsados.add(horasUsadas);
                 agregado = true;
             }
         }
