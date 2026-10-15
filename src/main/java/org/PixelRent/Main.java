@@ -340,6 +340,21 @@ public class Main {
             JOptionPane.showMessageDialog(null, "No se pudo agregar el dispositivo.");
         }
     }
+
+    public static void registrarCliente() {
+    String identificacion = JOptionPane.showInputDialog("Ingrese la identificación del cliente:");
+    String nombre = JOptionPane.showInputDialog("Ingrese el nombre del cliente:");
+    String telefono = JOptionPane.showInputDialog("Ingrese el teléfono del cliente:");
+    String correo = JOptionPane.showInputDialog("Ingrese el correo del cliente:");
+
+    boolean verificacion = pixelRent.registrarCliente(identificacion, nombre, telefono, correo);
+
+    if (verificacion) {
+        JOptionPane.showMessageDialog(null, "¡Cliente registrado con éxito!");
+    } else {
+        JOptionPane.showMessageDialog(null, "No se pudo registrar el cliente.");
+    }
+}
 }
 
 
