@@ -1,5 +1,6 @@
 package org.PixelRent;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class Empresa {
@@ -7,23 +8,62 @@ public class Empresa {
     private String codigo;
     private String nombre;
     private String direccion;
-    
+
     private LinkedList<Cliente> listClientes;
     private LinkedList<Operador> listOperadores;
     private LinkedList<Reserva> listReservas;
     private LinkedList<Sede> listSedes;
 
+    //Constructor
     public Empresa(String codigo, String nombre, String direccion) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.direccion = direccion;
-        
+
         this.listClientes = new LinkedList<>();
         this.listOperadores = new LinkedList<>();
         this.listReservas = new LinkedList<>();
         this.listSedes = new LinkedList<>();
     }
 
+    public boolean validarCodigoReserva(String codigoNuevo){
+        boolean validado = true;
+
+        //Que no este vacia la lista
+        if (this.listReservas != null) {
+            //Ciclo para comprobar las otras reservas
+            for (Reserva reserva : listReservas) {
+                //Que el dispositivo actual no sea nulo
+                if (reserva != null) {
+                    /*Si la reserva actual a agregar no comparte codigo con
+                    ninguno de la lista se valida como verdadera la validacion*/
+                    if (codigoNuevo.equals(reserva.getCodigo())) {
+                        validado = false;
+                    }
+                }
+            }
+        }
+        return validado;
+    }
+
+    public boolean cambiarEstadoReserva(EstadoReserva estadoReserva, Reserva reserva) {
+        if (reserva != null) {
+            return reserva.actualizarEstado(estadoReserva, this.listReservas);
+        }
+        return false;
+    }
+
+    public void consultarDispositivosDisp(LocalDate fecha, Turno turno){
+
+    }
+
+    public Reserva consultarReservaIdCliente(String idCliente){
+
+
+        return null;
+    }
+
+    //Gets y Sets
     public String getCodigo() {
         return this.codigo;
     }

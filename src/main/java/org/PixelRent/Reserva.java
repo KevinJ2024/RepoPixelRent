@@ -97,18 +97,18 @@ public class Reserva {
         return total;
     }
 
-    private double obtenerValorAdicional(Dispositivo dispositivo){
+    private double obtenerValorAdicional(Dispositivo dispositivo) {
         double adicional = 0.0;
-        if (dispositivo instanceof Dron){
-            if (((Dron) dispositivo).isBateria()){
+        if (dispositivo instanceof Dron) {
+            if (((Dron) dispositivo).isBateria()) {
                 adicional += 20000;
             }
-        }else if (dispositivo instanceof Camara){
-            if (((Camara) dispositivo).isEstabilizador()){
+        } else if (dispositivo instanceof Camara) {
+            if (((Camara) dispositivo).isEstabilizador()) {
                 adicional += 15000;
             }
-        }else if (dispositivo instanceof Kit){
-            if (((Kit) dispositivo).isControl()){
+        } else if (dispositivo instanceof Kit) {
+            if (((Kit) dispositivo).isControl()) {
                 adicional += 12000;
             }
         }
@@ -116,23 +116,75 @@ public class Reserva {
         return adicional;
     }
 
-    private boolean agregarDispositivo(Dispositivo dispositivoNuevo){
+    private boolean agregarDispositivo(Dispositivo dispositivoNuevo) {
         boolean sePuedeAgregar = true;
         boolean agregado = false;
 
-        if (listDispositivos != null){
-            for (Dispositivo dispositivo: listDispositivos){
-                if (dispositivo.getCodigo().equals(dispositivoNuevo.getCodigo())){
+        if (listDispositivos != null) {
+            for (Dispositivo dispositivo : listDispositivos) {
+                if (dispositivo.getCodigo().equals(dispositivoNuevo.getCodigo())) {
                     sePuedeAgregar = false;
                 }
             }
 
-            if (sePuedeAgregar){
+            if (sePuedeAgregar) {
                 listDispositivos.add(dispositivoNuevo);
                 agregado = true;
             }
         }
         return agregado;
+    }
+
+    public boolean actualizarEstado(EstadoReserva estadoNuevo, LinkedList<Reserva> reservasExistentes) {
+        boolean actualizado = false;
+
+        if (estadoNuevo == EstadoReserva.CONFIRMADA) {
+            // Se valida el operador Y que no existan colisiones de fecha, turno y dispositivo
+            if (validarOperador() && validarFechaDispositivos(reservasExistentes)) {
+                this.setEstadoReserva(estadoNuevo);
+                actualizado = true; // Se marca como actualizado exitosamente
+            }
+        } else {
+            //Para otros estados se cambia sin validaciones
+            this.setEstadoReserva(estadoNuevo);
+            actualizado = true;
+        }
+
+        return actualizado;
+    }
+
+    private boolean validarFechaDispositivos(LinkedList<Reserva> reservasExistentes) {
+        //Validar lista de dispositivos de la reserva actual
+        if (this.listDispositivos == null || this.listDispositivos.isEmpty()) {
+            return false;
+        }
+
+        //Se recorren todos los dispositivos de la reserva actual
+        for (Dispositivo dispNuevo : this.listDispositivos) {
+            if (dispNuevo == null) continue;
+
+            //Recorremos las demás reservas de la lista
+            for (Reserva reservaExistente : reservasExistentes) {
+                //Evitamos comparar con nulos o con esta misma reserva
+                if (reservaExistente == null || reservaExistente == this) continue;
+
+                //Si coinciden la fecha y el turno de la reserva actual con la existente
+                if (this.fecha != null && this.fecha.equals(reservaExistente.getFecha())
+                        && this.turno == reservaExistente.getTurno()) {
+
+                    if (reservaExistente.getListDispositivos() == null) continue;
+
+                    //Comparamos los dispositivos
+                    for (Dispositivo dispExistente : reservaExistente.getListDispositivos()) {
+                        if (dispExistente != null && dispNuevo.getCodigo().equals(dispExistente.getCodigo())) {
+                            //Coinciden fechas y turnos
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     //Gets y Sets
