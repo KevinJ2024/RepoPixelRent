@@ -63,6 +63,53 @@ public class Empresa {
         return null;
     }
 
+    public Cliente consultarClienteId(String id){
+        if (listClientes != null){
+            for (Cliente cliente: listClientes){
+                if (cliente != null){
+                    if (cliente.identificacion().equals(id)){
+                        return cliente;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public Operador consultarOperadorId(String id){
+        if (listOperadores != null){
+            for (Operador operador: listOperadores){
+                if (operador != null){
+                    if (operador.getIdentificacion().equals(id)){
+                        return operador;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    //Gets y Sets
+    public Sede encontrarSede(String codigoSede) {
+        for (Sede sede : listSedes) {
+            if (sede.getCodigo().equals(codigoSede)) {
+                return sede;
+            }
+        }
+        return null;
+    }
+
+    public boolean registrarReserva(String codigo, LocalDate fecha, Turno turno, EstadoReserva estado, Cliente cliente, Operador operador) {
+        for (Reserva reserva : this.listReservas) {
+            if (reserva.getCodigo().equals(codigo)) {
+                return false;
+            }
+        }
+
+        Reserva nuevaReserva = new Reserva(codigo, fecha, turno, estado, cliente, operador);
+        return this.listReservas.add(nuevaReserva);
+    }
+
     //Gets y Sets
     public String getCodigo() {
         return this.codigo;
