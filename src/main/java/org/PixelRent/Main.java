@@ -17,6 +17,8 @@ public class Main {
                     "\n4.Registrar sede" +
                     "\n5.Registrar reserva" +
                     "\n6.Menu Consultas" +
+                    "\n7.Actualizar estado de una reserva" +
+                    "\n8.Agregar dispositivo a reserva" +
                     "\n0. salir del sistema"));
 
             switch (dato) {
@@ -37,6 +39,12 @@ public class Main {
                     break;
                 case 6:
                     menuConsultar();
+                    break;
+                case 7:
+                    actualizarEstadoReserva();
+                    break;
+                case 8:
+                    agregarDispositivoReserva();
                     break;
                 case 0:
                     bandera = false;
@@ -220,8 +228,6 @@ public class Main {
 
         if (verificacion) {
             JOptionPane.showMessageDialog(null, "¡Sede registrada con éxito!");
-
-
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo registrar la sede.");
         }
@@ -300,6 +306,38 @@ public class Main {
             mensajeFinal += camaras + drones + kits;
 
             JOptionPane.showMessageDialog(null, mensajeFinal);
+        }
+    }
+
+    //Metodos de cambios
+    public static void actualizarEstadoReserva(){
+        String codigoReserva = JOptionPane.showInputDialog("Ingrese el codigo de la reserva a actualizar el estado");
+        Reserva reserva = pixelRent.consultarReservaCodigo(codigoReserva);
+        String estadoStr = JOptionPane.showInputDialog("Ingrese el nuevo estado (PENDIENTE, ACTIVA, etc):");
+        EstadoReserva nuevoEstado = EstadoReserva.valueOf(estadoStr.toUpperCase());
+
+        boolean res = pixelRent.cambiarEstadoReserva(nuevoEstado, reserva);
+
+        if (res) {
+            JOptionPane.showMessageDialog(null, "¡Estado de reserva cambiado con exito!");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo cambiar el estado de la reserva.");
+        }
+    }
+
+    public static void agregarDispositivoReserva(){
+        String codigoReserva = JOptionPane.showInputDialog("Ingrese el codigo de la reserva a añadir el dispositivo");
+        Reserva reserva = pixelRent.consultarReservaCodigo(codigoReserva);
+
+        String codigoDispositivo = JOptionPane.showInputDialog("Ingrese el codigo del dispositivo a agregar");
+        Dispositivo dispositivo = pixelRent.consultarDispositivoCodigo(codigoDispositivo);
+
+        boolean res = reserva.agregarDispositivo(dispositivo);
+
+        if (res) {
+            JOptionPane.showMessageDialog(null, "¡Dispositivo agregado exitosamente!");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo agregar el dispositivo.");
         }
     }
 }

@@ -116,7 +116,7 @@ public class Reserva {
         return adicional;
     }
 
-    private boolean agregarDispositivo(Dispositivo dispositivoNuevo) {
+    public boolean agregarDispositivo(Dispositivo dispositivoNuevo) {
         boolean sePuedeAgregar = true;
         boolean agregado = false;
 

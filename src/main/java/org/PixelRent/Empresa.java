@@ -137,6 +137,22 @@ public class Empresa {
         return null;
     }
 
+    public Dispositivo consultarDispositivoCodigo(String codigoDispositivo){
+        if ( listSedes!= null) {
+            for (Sede sede : listSedes) {
+                if (sede != null) {
+                    for (Dispositivo dispositivo: sede.getListDispositivos()){
+                        if (dispositivo.getCodigo().equals(codigoDispositivo)) {
+                            return dispositivo;
+                        }
+                    }
+
+                }
+            }
+        }
+        return null;
+    }
+
     public Cliente consultarClienteId(String id) {
         if (listClientes != null) {
             for (Cliente cliente : listClientes) {
@@ -174,46 +190,50 @@ public class Empresa {
     }
 
     public boolean registrarReserva(String codigo, LocalDate fecha, Turno turno, EstadoReserva estado, Cliente cliente, Operador operador) {
-        for (Reserva reserva : this.listReservas) {
-            if (reserva.getCodigo().equals(codigo)) {
+        if (validarCodigoReserva(codigo)) {
+            for (Reserva reserva : this.listReservas) {
+                if (reserva.getCodigo().equals(codigo)) {
+                    return false;
+                }
+            }
+
+            Reserva nuevaReserva = new Reserva(codigo, fecha, turno, estado, cliente, operador);
+
+            cliente.listReservas().add(nuevaReserva);
+            return this.listReservas.add(nuevaReserva);
+        }else{
+            return false;
+        }
+    }
+
+    public boolean registrarSede(String codigo, String nombre, String direccion) {
+        for (Sede sede : this.listSedes) {
+            if (sede.getCodigo().equals(codigo)) {
                 return false;
             }
         }
 
-        Reserva nuevaReserva = new Reserva(codigo, fecha, turno, estado, cliente, operador);
-
-        cliente.listReservas().add(nuevaReserva);
-        return this.listReservas.add(nuevaReserva);
+        Sede nuevaSede = new Sede(codigo, nombre, direccion);
+        return this.listSedes.add(nuevaSede);
     }
 
-
-    public boolean registrarSede(String codigo, String nombre, String direccion) {
-    for (Sede sede : this.listSedes) {
-        if (sede.getCodigo().equals(codigo)) {
-            return false;
+    public boolean registrarOperador(Operador nuevoOperador) {
+        for (Operador operador : this.listOperadores) {
+            if (operador.getIdentificacion().equals(nuevoOperador.getIdentificacion())) {
+                return false;
+            }
         }
+        return this.listOperadores.add(nuevoOperador);
     }
 
-    Sede nuevaSede = new Sede(codigo, nombre, direccion);
-    return this.listSedes.add(nuevaSede);
-}
-public boolean registrarOperador(Operador nuevoOperador) {
-    for (Operador operador : this.listOperadores) {
-        if (operador.getIdentificacion().equals(nuevoOperador.getIdentificacion())) {
-            return false;
+    public boolean registrarSede(Sede nuevaSede) {
+        for (Sede sede : this.listSedes) {
+            if (sede.getCodigo().equals(nuevaSede.getCodigo())) {
+                return false;
+            }
         }
+        return this.listSedes.add(nuevaSede);
     }
-    return this.listOperadores.add(nuevoOperador);
-}
-
-public boolean registrarSede(Sede nuevaSede) {
-    for (Sede sede : this.listSedes) {
-        if (sede.getCodigo().equals(nuevaSede.getCodigo())) {
-            return false;
-        }
-    }
-    return this.listSedes.add(nuevaSede);
-}
 
     //Gets y Sets
     public String getCodigo() {
