@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 public class Main {
     static Empresa pixelRent = new Empresa("PixelRent", "16283", "calle 19 norte numero 21-34");
-    static Sede sedePrincipal = new Sede("PixelRent", "16283", "calle 19 norte numero 21-34");
 
     public static void main(String[] args) {
         boolean bandera = true;
@@ -81,14 +80,13 @@ public class Main {
             bateria = false;
         }
 
-        boolean verificacion = sedePrincipal.registrarDron(codigo, marca, modelo, theSede, autonomia, bateria);
+        boolean verificacion = theSede.registrarDron(codigo, marca, modelo, theSede, autonomia, bateria);
         if (verificacion) {
             JOptionPane.showMessageDialog(null, "Registro exitoso");
         } else {
             JOptionPane.showMessageDialog(null, "No se hizo el registro");
         }
     }
-
 
     public static void registrarCamara() {
         String codigo = JOptionPane.showInputDialog("Ingrese el código de la Cámara:");
@@ -107,7 +105,7 @@ public class Main {
             estabilizador = false;
         }
 
-        boolean verificacion = sedePrincipal.registrarCamara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
+        boolean verificacion = theSede.registrarCamara(codigo, marca, modelo, theSede, resolucionMax, estabilizador);
 
         if (verificacion) {
             JOptionPane.showMessageDialog(null, "Registro exitoso");
@@ -134,7 +132,7 @@ public class Main {
             control = false;
         }
 
-        boolean verificacion = sedePrincipal.registrarKit(codigo, marca, modelo, theSede, luces, control);
+        boolean verificacion = theSede.registrarKit(codigo, marca, modelo, theSede, luces, control);
 
         if (verificacion) {
             JOptionPane.showMessageDialog(null, "Registro exitoso");
